@@ -1,0 +1,66 @@
+{
+  "product": "Stremio Watch Sync & Repair",
+  "version": "1.0.0",
+  "at": "2026-09-17T23:52:46.811355+00:00",
+  "releaseState": "PUBLIC_RELEASE",
+  "configurationSchema": 3,
+  "implementationTests": {
+    "tests": 146,
+    "pass": 146,
+    "fail": 0,
+    "skipped": 0
+  },
+  "dependencyAudit": {
+    "runtimeNpmDependencies": 0,
+    "knownVulnerabilities": 0
+  },
+  "security": {
+    "loopbackOnly": true,
+    "hostAndOriginValidation": true,
+    "authenticatedManagement": true,
+    "privateNetworkEgressBlocked": true,
+    "dnsPinned": true,
+    "arbitraryUrlProxy": false,
+    "hostedAddonSurface": false,
+    "encryptedState": true,
+    "symlinkAndHardlinkProtection": true,
+    "windowsRecoverableAtomicReplace": true
+  },
+  "resilience": {
+    "boundedReadRetries": true,
+    "retryAfterBounded": true,
+    "sourceCircuitCooldown": true,
+    "metadata404FallbackExplicit": true,
+    "securityFailureFallbackBlocked": true,
+    "posterReachabilityAndMime": true,
+    "cinemetaValidatedCacheOnlyFallback": true,
+    "unprovedSeriesIsolated": true,
+    "nativeTraktOutageFailsClosed": true
+  },
+  "traktIntegration": {
+    "mode": "stremio-native",
+    "userDeveloperApplicationRequired": false,
+    "vipRequiredByTool": false,
+    "stremioOwnsOAuth": true,
+    "directTraktApiMutation": false,
+    "nativeHistoryReadLiveVerified": true
+  },
+  "safeDefaults": {
+    "host": "127.0.0.1",
+    "scheduleEnabled": false,
+    "libraryWrites": false,
+    "nonAtomicWriteAcknowledged": false,
+    "watchedRepairWrites": false,
+    "writeHold": null,
+    "publicReady": false
+  },
+  "compatibility": {
+    "safeConfigMigration": true,
+    "legacyHistorySchemaImport": true,
+    "oldDirectBaselineBackedUpBeforeReset": true,
+    "deprecatedDirectTraktSecretsPurged": true
+  },
+  "publicEvidence": "evidence/public-release-review-1.0.0.json",
+  "testLog": "evidence/finalization-tests.txt",
+  "privateOperationalEvidenceIncluded": false
+}

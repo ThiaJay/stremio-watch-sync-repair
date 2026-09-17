@@ -1,0 +1,16 @@
+node_modules/
+data/
+data-test/
+.test-data/
+exports/
+config.json
+.env
+.env.*
+.runtime/
+.development/
+releases/
+coverage/
+.private/
+*.log
+*.pem
+*.key

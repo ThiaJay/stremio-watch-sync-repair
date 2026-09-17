@@ -1,0 +1,95 @@
+{
+  "product": "Stremio Watch Sync & Repair",
+  "version": "1.0.0",
+  "releaseType": "COMMUNITY_RELEASE",
+  "at": "2026-09-17T23:52:46.811355+00:00",
+  "scope": "Stremio-native watched-state reconciliation, stale stored-poster repair, history exchange, safety and resilience",
+  "automatedTests": {
+    "tests": 146,
+    "pass": 146,
+    "fail": 0,
+    "skipped": 0
+  },
+  "dependencyAudit": {
+    "runtimeNpmDependencies": 0,
+    "knownVulnerabilities": 0
+  },
+  "syntax": {
+    "javascriptFilesChecked": 37,
+    "javascriptFailures": 0,
+    "powershell": "PASSED"
+  },
+  "nativeTrakt": {
+    "mode": "stremio-native",
+    "userDeveloperApplicationRequired": false,
+    "vipRequiredByTool": false,
+    "stremioOwnsOAuth": true,
+    "directTraktApiMutation": false,
+    "linkedTokenPersistedByTool": false,
+    "nativeHistoryReadLiveVerified": true,
+    "liveVerificationExternalWrites": 0
+  },
+  "migration": {
+    "liveConfigSchema": 3,
+    "oldBaselineEncryptedBackup": true,
+    "deprecatedDirectTraktSecretsPurged": true,
+    "watchedDataRetained": true,
+    "externalWrites": 0
+  },
+  "safeDefaults": {
+    "host": "127.0.0.1",
+    "scheduleEnabled": false,
+    "libraryWrites": false,
+    "nonAtomicWriteAcknowledged": false,
+    "watchedRepairWrites": false,
+    "writeHold": null,
+    "publicReady": false
+  },
+  "privacyScan": {
+    "publicFilesScanned": 73,
+    "privateValuesChecked": 5,
+    "leakFiles": 0
+  },
+  "sourceSurface": {
+    "hostedAddonRoutes": false,
+    "arbitraryUrlProxy": false,
+    "publicListener": false,
+    "legacySpoilerCatalogRuntime": false,
+    "dynamicCodeEvaluation": false,
+    "directTraktApiHost": false
+  },
+  "tmdbAttribution": {
+    "approvedPrimaryShortBlueLogoBundledUnmodified": true,
+    "faqNoticePresent": true,
+    "apiTermsNoticePresent": true
+  },
+  "resilience": {
+    "boundedReadRetries": true,
+    "retryAfterBounded": true,
+    "sourceCircuitCooldown": true,
+    "metadata404FallbackExplicit": true,
+    "securityFailureFallbackBlocked": true,
+    "posterReachabilityAndMime": true,
+    "cinemetaValidatedCacheOnlyFallback": true,
+    "unprovedSeriesIsolated": true,
+    "nativeTraktOutageFailsClosed": true
+  },
+  "storage": {
+    "aes256gcm": true,
+    "aadBound": true,
+    "symbolicLinksBlocked": true,
+    "hardlinksBlocked": true,
+    "projectLocalState": true,
+    "windowsRecoverableAtomicReplace": true
+  },
+  "ci": {
+    "readOnlyPermissions": true,
+    "actionsPinnedToFullCommitSha": true,
+    "packageManagerCache": false,
+    "nodeMatrix": [
+      22,
+      24,
+      26
+    ]
+  }
+}

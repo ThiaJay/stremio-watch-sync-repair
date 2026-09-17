@@ -1,0 +1,80 @@
+{
+  "version": 3,
+  "server": {
+    "host": "127.0.0.1",
+    "port": 7080,
+    "dataDir": "./data",
+    "scheduleEnabled": false
+  },
+  "profiles": [
+    {
+      "id": "main",
+      "label": "main",
+      "locale": "en",
+      "timezone": "UTC",
+      "modules": {
+        "libraryRepair": true,
+        "watchedState": true,
+        "traktBridge": true,
+        "diagnostics": true
+      },
+      "metadata": {
+        "source": "upstream",
+        "fallbackSources": [
+          "tmdb"
+        ],
+        "repairFallback": false,
+        "upstreamSecret": "metadataUrl",
+        "requestLanguageParameter": false,
+        "cacheSeconds": 60
+      },
+      "metadataText": {
+        "preferredLanguages": [
+          "en"
+        ],
+        "fallbackOrder": [
+          "preferred",
+          "original"
+        ]
+      },
+      "libraryRepair": {
+        "writeEnabled": false,
+        "allowNonAtomicAccountWrites": false,
+        "quietSeconds": 300,
+        "maxChanges": 10,
+        "fields": [
+          "poster",
+          "posterShape"
+        ],
+        "intervalMinutes": 30,
+        "verifyPosterReachability": true
+      },
+      "trakt": {
+        "mode": "stremio-native",
+        "stremioWriteEnabled": false,
+        "syncMarkUnwatched": true,
+        "confirmUnwatchedCycles": 2,
+        "conflictPolicy": "manual",
+        "maxChanges": 20,
+        "intervalMinutes": 15
+      },
+      "resilience": {
+        "readRetries": 2,
+        "requestTimeoutSeconds": 15,
+        "sourceFailureThreshold": 3,
+        "sourceCooldownSeconds": 120,
+        "maxRetryAfterSeconds": 60,
+        "watchedMappingFallback": "validated-cache-only"
+      },
+      "network": {
+        "imageHosts": [
+          "image.tmdb.org",
+          "artworks.thetvdb.com",
+          "images.metahub.space",
+          "api.ratingposterdb.com"
+        ],
+        "metadataHosts": []
+      }
+    }
+  ]
+}

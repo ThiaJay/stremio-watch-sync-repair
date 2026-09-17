@@ -1,0 +1,62 @@
+import {assert,clone,equal,parseWatchKey} from '../core/util.js';
+import {orderedVideos,decodeBits,encodeBits,episodeKey} from './watched.js';
+import {manualOperations} from './history-exchange.js';
+
+function presentInStremio(s,key,sv){const id=parseWatchKey(key).id;return Array.isArray(s.presentIds)?s.presentIds.includes(id):sv!==undefined;}
+
+export function detectBulkLibraryRewrite(previous,current,threshold=20){
+ const before=previous?.itemMtimes,after=current?.itemMtimes;if(!before||!after)return [];
+ const buckets=new Map();for(const [id,mtime] of Object.entries(after)){if(before[id]===mtime||!Number.isFinite(Date.parse(mtime)))continue;const at=new Date(Math.floor(Date.parse(mtime)/1000)*1000).toISOString();if(!buckets.has(at))buckets.set(at,[]);buckets.get(at).push(id);}
+ return [...buckets].filter(([,ids])=>ids.length>=threshold).map(([at,ids])=>({at,count:ids.length,ids:ids.sort()})).sort((a,b)=>a.at.localeCompare(b.at));
+}
+const MANUAL_STREMIO_SINGLE_ITEM_LIMIT=500;
+export function syncChangeLimitAllowed(plan,maxChanges){
+ if(plan.operations.length<=maxChanges)return true;if(!plan.manual||plan.operations.length>MANUAL_STREMIO_SINGLE_ITEM_LIMIT)return false;
+ const ids=new Set();for(const op of plan.operations){if(op.target!=='stremio')return false;ids.add(parseWatchKey(op.key).id);}return ids.size===1;
+}
+export function orderOperations(operations){const rank=op=>op.desired===true?0:1;return [...operations].sort((a,b)=>rank(a)-rank(b));}
+export function deferRecentlyActiveStremio(result,s,quietSeconds,now=Date.now()){const items=new Map((s.items??[]).map(x=>[x._id,x]));result.operations=result.operations.filter(op=>{if(op.target!=='stremio')return true;const item=items.get(parseWatchKey(op.key).id);if(!item)return true;const last=Math.max(Date.parse(item.state?.lastWatched)||0,Date.parse(item._mtime)||0);if(now-last<quietSeconds*1000){result.skipped.push({key:op.key,code:'STREMIO_ITEM_RECENTLY_ACTIVE'});return false;}return true;});return result;}
+
+function inboundUnwatchObservation(key,nextObs,policy,now){
+ const old=nextObs[key],count=old?.origin==='trakt'?old.count:0,canCount=!old||now-old.last>=policy.intervalMinutes*60000;
+ nextObs[key]={origin:'trakt',count:count+(canCount?1:0),last:canCount?now:old.last};return nextObs[key].count>=policy.confirmUnwatchedCycles;
+}
+export function reconcile(previous,s,t,policy,observations={},now=Date.now()){
+ assert(s.complete&&t.complete,'INCOMPLETE_WATCHED_SOURCE');if(previous)assert(previous.s.identity===s.identity&&previous.t.identity===t.identity,'WATCHED_ACCOUNT_CHANGED');
+ const states={},operations=[],conflicts=[],nextObs=clone(observations),skipped=[];const keys=new Set([...Object.keys(s.states),...Object.keys(t.states),...Object.keys(previous?.s.states??{}),...Object.keys(previous?.t.states??{})]);
+ for(const key of keys){const parsed=parseWatchKey(key),hasS=Object.hasOwn(s.states,key),sv=hasS?s.states[key]:undefined,tv=t.states[key]===true;
+  if((s.unknownIds??[]).includes(parsed.id)){states[key]=sv===true||tv;delete nextObs[key];skipped.push({key,code:'STREMIO_WATCH_STATE_UNRESOLVED'});continue;}
+  const ps=previous?.s.states[key],pt=previous?.t.states[key]===true,sAdd=!!previous&&ps!==true&&sv===true,sRemove=!!previous&&ps===true&&sv===false,tAdd=!!previous&&!pt&&tv,tRemove=!!previous&&pt&&!tv;
+  if((sAdd&&tRemove)||(sRemove&&tAdd)){delete nextObs[key];states[key]=sv===true||tv;conflicts.push({key,code:'OPPOSING_WATCHED_CHANGES'});continue;}
+  states[key]=sv===true||tv;
+  if(!previous){
+   if(tv&&sv!==true){if(presentInStremio(s,key,sv))operations.push({target:'stremio',key,desired:true,watchedAt:t.dates?.[key]??null});else skipped.push({key,code:'STREMIO_ITEM_NOT_PRESENT'});}
+   else if(sv===true&&!tv)skipped.push({key,code:'STREMIO_NATIVE_OUTBOUND_PENDING'});
+   continue;
+  }
+  if(tAdd&&sv!==true){delete nextObs[key];if(presentInStremio(s,key,sv))operations.push({target:'stremio',key,desired:true,watchedAt:t.dates?.[key]??null});else skipped.push({key,code:'STREMIO_ITEM_NOT_PRESENT'});continue;}
+  if((tRemove||nextObs[key]?.origin==='trakt')&&sv===true&&!tv){
+   if(policy.syncMarkUnwatched&&inboundUnwatchObservation(key,nextObs,policy,now))operations.push({target:'stremio',key,desired:false,watchedAt:null});
+   else skipped.push({key,code:policy.syncMarkUnwatched?'UNWATCHED_CHANGE_AWAITING_CONFIRMATION':'TRAKT_UNWATCH_SYNC_DISABLED'});
+   continue;
+  }
+  if(sAdd&&!tv||sRemove&&tv){delete nextObs[key];skipped.push({key,code:'STREMIO_NATIVE_OUTBOUND_PENDING'});continue;}
+  if(sv===true&&!tv||sv===false&&tv)skipped.push({key,code:'STREMIO_NATIVE_OUTBOUND_PENDING'});else delete nextObs[key];
+ }
+ return {states,operations,conflicts,observations:nextObs,skipped};
+}
+export function watchedCandidate(item,meta,operations){const next=clone(item),allowed=item.type==='movie'?['state.timesWatched']:['state.watched'];if(item.type==='movie'){assert(operations.length===1,'DUPLICATE_MOVIE_OPERATION');next.state.timesWatched=operations[0].desired?Math.max(1,item.state.timesWatched??0):0;}else{const videos=orderedVideos(meta),ids=videos.map(v=>v.id),bits=decodeBits(item.state.watched,ids);for(const op of operations){const index=videos.findIndex(v=>episodeKey(item._id,v)===op.key);assert(index>=0,'EPISODE_OPERATION_UNMAPPED');bits[index]=op.desired;}next.state.watched=encodeBits(bits,ids);}return {next,allowed};}
+
+export class TraktBridge{
+ constructor(profile,store,watched,trakt,stremio,metadata,gate){Object.assign(this,{profile,store,watched,trakt,stremio,metadata,gate});}
+ async hydrateStremioEpisodes(result,s){const sets=new Map(),bad=new Set();for(const op of result.operations.filter(x=>x.target==='stremio'&&parseWatchKey(x.key).kind==='episode')){const id=parseWatchKey(op.key).id;if(!s.metaById[id]&&!bad.has(id)){try{s.metaById[id]=await this.watched.metaForSeries(id);}catch(e){bad.add(id);result.skipped.push({key:op.key,code:e.code??'STREMIO_EPISODE_METADATA_UNAVAILABLE'});}}if(s.metaById[id]&&!sets.has(id))sets.set(id,new Set(orderedVideos(s.metaById[id]).map(v=>episodeKey(id,v))));if(sets.has(id)&&!sets.get(id).has(op.key)){bad.add(op.key);result.skipped.push({key:op.key,code:'EPISODE_OPERATION_UNMAPPED'});}}
+  result.operations=result.operations.filter(op=>{if(op.target!=='stremio'||parseWatchKey(op.key).kind!=='episode')return true;const id=parseWatchKey(op.key).id;return !bad.has(id)&&!bad.has(op.key);});return result;}
+ async plan(){assert(this.profile.modules.traktBridge,'MODULE_OFF');const s=await this.watched.scan();assert(s.complete,'INCOMPLETE_STREMIO_HISTORY');const t=await this.trakt.snapshot(),pid=this.profile.id,previous=this.store.read(pid,'sync-baseline'),observed=this.store.read(pid,'sync-observations',{}),r=deferRecentlyActiveStremio(await this.hydrateStremioEpisodes(reconcile(previous,s,t,this.profile.trakt,observed),s),s,this.profile.libraryRepair.quietSeconds),bulk=detectBulkLibraryRewrite(previous?.s,s);r.operations=orderOperations(r.operations);if(bulk.length&&r.operations.length)for(const b of bulk)r.conflicts.push({code:'BULK_LIBRARY_REWRITE_REVIEW_REQUIRED',at:b.at,count:b.count});this.store.write(pid,'sync-observations',r.observations);if(!r.conflicts.length){this.store.write(pid,'watched-canonical',{at:new Date().toISOString(),complete:true,states:r.states});this.store.write(pid,'sync-baseline',{s:{...s,items:undefined,metaById:undefined},t});}else this.store.audit(pid,'traktBridge','syncConflictHeld',{conflicts:r.conflicts.length,bulk:bulk.map(x=>({at:x.at,count:x.count}))});return {kind:'sync',mode:'stremio-native',s,t,operations:r.operations.slice(0,this.profile.trakt.maxChanges),remaining:Math.max(0,r.operations.length-this.profile.trakt.maxChanges),conflicts:r.conflicts,skipped:r.skipped,canonicalCount:Object.values(r.states).filter(Boolean).length};}
+ async manualPlan(imported){assert(this.profile.modules.traktBridge,'MODULE_OFF');const s=await this.watched.scan();assert(s.complete,'INCOMPLETE_STREMIO_HISTORY');const t=await this.trakt.snapshot(),r=await this.hydrateStremioEpisodes(manualOperations(imported,s,t),s),candidate={manual:true,operations:r.operations},limit=syncChangeLimitAllowed(candidate,this.profile.trakt.maxChanges)?r.operations.length:this.profile.trakt.maxChanges;return {kind:'sync',mode:'stremio-native',manual:true,s,t,operations:r.operations.slice(0,limit),remaining:Math.max(0,r.operations.length-limit),conflicts:[],skipped:r.skipped,canonicalCount:null};}
+ async apply(plan,{ackRemovals=false}={}){assert(this.profile.modules.traktBridge&&this.profile.trakt.stremioWriteEnabled,'WATCH_SYNC_WRITES_DISABLED');this.gate.checkHold();assert(plan.operations.every(x=>x.target==='stremio'),'TRAKT_DIRECT_WRITE_REMOVED');assert(syncChangeLimitAllowed(plan,this.profile.trakt.maxChanges),'SYNC_CHANGE_LIMIT');assert(!plan.operations.some(x=>!x.desired)||this.profile.trakt.syncMarkUnwatched&&ackRemovals,'REMOVALS_REQUIRE_CONFIRMATION');const currentS=await this.watched.scan(),currentT=await this.trakt.snapshot();assert(currentS.complete&&equal(currentS.states,plan.s.states)&&equal(currentS.orders,plan.s.orders)&&equal(currentS.unknownIds??[],plan.s.unknownIds??[])&&currentS.identity===plan.s.identity&&currentT.identity===plan.t.identity&&equal(currentT.states,plan.t.states),'WATCHED_PLAN_STALE',409);
+  const results=[],group=new Map();let mutated=false,firstBackup=null;for(const op of plan.operations){const id=parseWatchKey(op.key).id;if(!group.has(id))group.set(id,[]);group.get(id).push(op);}
+  try{for(const [id,ops]of group){this.deadline?.();const before=plan.s.items.find(i=>i._id===id);assert(before,'STREMIO_ITEM_MISSING');const {next,allowed}=watchedCandidate(before,plan.s.metaById[id],ops);if(!equal(before,next)){const result=await this.gate.write(before,next,allowed);results.push(result);mutated=true;firstBackup??=result.backup;}}
+   const afterT=await this.trakt.snapshot(),afterS=await this.watched.scan();assert(afterS.complete,'POST_SYNC_SOURCE_INCOMPLETE');for(const op of plan.operations){const actual=afterS.states[op.key];assert(actual===op.desired,'SYNC_READBACK_FAILED',409);}this.store.write(this.profile.id,'sync-baseline',{s:{...afterS,items:undefined,metaById:undefined},t:afterT});this.store.write(this.profile.id,'watched-canonical',{at:new Date().toISOString(),complete:true,states:reconcile({s:currentS,t:currentT},afterS,afterT,this.profile.trakt,this.store.read(this.profile.id,'sync-observations',{})).states});this.store.audit(this.profile.id,'traktBridge','verifiedNativeSync',{operations:plan.operations.length});return {changed:results.length,results,skipped:[]};
+  }catch(e){const existing=this.store.read(this.profile.id,'write-hold');if(!existing&&mutated)this.gate.hold('SYNC_PARTIAL_WRITE',firstBackup);throw e;}
+ }
+}
