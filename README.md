@@ -2,7 +2,7 @@
 
 # Watch Sync & Repair for Stremio
 
-> **Historical combined predecessor.** Version 1.0.1 remains available for audit and regression history, though active development is now split by state ownership. Watched-state reconciliation and guarded whole-series/season watched actions live in [Stremio Watch State Reference](https://github.com/ThiaJay/stremio-watch-state-reference). One-time stored LibraryItem poster repair lives in [Library Artwork Repair for Stremio](https://github.com/ThiaJay/stremio-library-artwork-repair). New work must not recombine these domains here.
+> **RETIRED / HISTORICAL — do not choose this repository for new setup or development.** Version 1.0.1 remains available for audit and regression history only. Active development is split by state ownership. Watched-state reconciliation and guarded whole-series/season watched actions live in [Stremio Watch State Reference](https://github.com/ThiaJay/stremio-watch-state-reference). One-time stored LibraryItem poster repair lives in [Library Artwork Repair for Stremio](https://github.com/ThiaJay/stremio-library-artwork-repair). New work must not recombine these domains here.
 
 A community reference implementation and one-time account repair harness for two jobs that Stremio installations can otherwise leave inconsistent:
 
@@ -44,7 +44,9 @@ See `docs/RESILIENCE.md` and `docs/THREAT-MODEL.md` for the detailed failure mat
 
 The current hardened reference build is **1.0.1**. Download the source ZIP and matching SHA-256 file from [GitHub Releases](https://github.com/ThiaJay/stremio-watch-sync-repair/releases). Verify the checksum before extracting.
 
-## Quick start
+## Historical setup (audit/regression only)
+
+Do not use this section for a new installation. It is retained only so the 1.0.1 historical build remains reproducible for audit/regression work.
 
 1. Extract the source into a user-controlled folder.
 2. Copy `config.example.json` to `config.json` if the launcher has not created one.
