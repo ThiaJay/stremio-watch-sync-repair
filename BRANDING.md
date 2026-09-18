@@ -1,6 +1,6 @@
 # Branding
 
-Stremio Watch Sync & Repair uses an original community-project identity. It does **not** use or reproduce the official Stremio, Trakt or TMDB logos as its product mark.
+Watch Sync & Repair for Stremio uses an original community-project identity. It does **not** use or reproduce the official Stremio, Trakt or TMDB logos as its product mark.
 
 ## Assets
 

@@ -1,18 +1,30 @@
 {
-  "product": "Stremio Watch Sync & Repair",
+  "product": "Watch Sync & Repair for Stremio",
   "version": "1.0.0",
-  "at": "2026-09-17T23:52:46.811355+00:00",
-  "releaseState": "PUBLIC_RELEASE",
+  "at": "2026-09-18T09:48:33.576484+00:00",
+  "releaseState": "UPSTREAM_DISCUSSION_READY_REFERENCE",
   "configurationSchema": 3,
   "implementationTests": {
-    "tests": 146,
-    "pass": 146,
+    "tests": 175,
+    "pass": 175,
     "fail": 0,
     "skipped": 0
   },
   "dependencyAudit": {
     "runtimeNpmDependencies": 0,
     "knownVulnerabilities": 0
+  },
+  "syntax": {
+    "javascriptFilesChecked": 37,
+    "javascriptFailures": 0,
+    "powershell": "PASSED"
+  },
+  "architecture": {
+    "stremioAddon": false,
+    "deviceDaemonRequired": false,
+    "hostedSyncService": false,
+    "productionOwnerTarget": "Stremio Core/account integration",
+    "referenceHarnessLocalOnly": true
   },
   "security": {
     "loopbackOnly": true,
@@ -24,7 +36,9 @@
     "hostedAddonSurface": false,
     "encryptedState": true,
     "symlinkAndHardlinkProtection": true,
-    "windowsRecoverableAtomicReplace": true
+    "windowsRecoverableAtomicReplace": true,
+    "multiDeviceConcurrentChangeFailsClosed": true,
+    "sourceIdentityRebaseline": true
   },
   "resilience": {
     "boundedReadRetries": true,
@@ -33,9 +47,12 @@
     "metadata404FallbackExplicit": true,
     "securityFailureFallbackBlocked": true,
     "posterReachabilityAndMime": true,
-    "cinemetaValidatedCacheOnlyFallback": true,
+    "cinemetaValidatedRegistryFallback": true,
+    "nonEpisodeBitPositionsPreserved": true,
+    "duplicateEpisodeStateSeparatedFromWriteability": true,
     "unprovedSeriesIsolated": true,
-    "nativeTraktOutageFailsClosed": true
+    "nativeTraktOutageFailsClosed": true,
+    "largeBacklogBoundedBatchConvergence": true
   },
   "traktIntegration": {
     "mode": "stremio-native",
@@ -43,6 +60,7 @@
     "vipRequiredByTool": false,
     "stremioOwnsOAuth": true,
     "directTraktApiMutation": false,
+    "linkedTokenPersistedByTool": false,
     "nativeHistoryReadLiveVerified": true
   },
   "safeDefaults": {
@@ -54,11 +72,26 @@
     "writeHold": null,
     "publicReady": false
   },
+  "upstreamCompliance": {
+    "stremioContributingReviewed": true,
+    "existingIssuesMapped": true,
+    "discussionBeforeArchitecturalPR": true,
+    "targetBaseBranch": "development",
+    "smallestPracticalRootCauseChange": true,
+    "actionInternalEventDisciplineDocumented": true,
+    "schemaMigrationRuleDocumented": true,
+    "rustValidationCommandsDocumented": true
+  },
   "compatibility": {
     "safeConfigMigration": true,
     "legacyHistorySchemaImport": true,
     "oldDirectBaselineBackedUpBeforeReset": true,
     "deprecatedDirectTraktSecretsPurged": true
+  },
+  "referenceLiveVerification": {
+    "safeReconciliationConverged": true,
+    "conflictsRemaining": false,
+    "writeHoldRemaining": false
   },
   "publicEvidence": "evidence/public-release-review-1.0.0.json",
   "testLog": "evidence/finalization-tests.txt",

@@ -33,6 +33,6 @@ A Stremio backup stores the complete before-record, intended candidate and allow
 
 ## Service lock
 
-Use `Stop Stremio Watch Sync & Repair.vbs` / `Open Stremio Watch Sync & Repair.vbs` on Windows. A stale `data/service.lock` may be cleared with the CLI only after its recorded PID is no longer alive. A live owner's lock must never be removed.
+Use `Stop Watch Sync & Repair for Stremio.vbs` / `Open Watch Sync & Repair for Stremio.vbs` on Windows. A stale `data/service.lock` may be cleared with the CLI only after its recorded PID is no longer alive. A live owner's lock must never be removed.
 
 Keep `config.json`, `data/`, `.master-key`, exports and plaintext `backup-export` results private. If the master key is lost, encrypted state cannot be recovered; reconnect accounts and rebuild state rather than weakening encryption.

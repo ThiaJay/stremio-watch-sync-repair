@@ -1,6 +1,6 @@
 # Third-party notices
 
-Stremio Watch Sync & Repair is community software licensed under MIT. It is not affiliated with or endorsed by Stremio, Trakt or TMDB.
+Watch Sync & Repair for Stremio is community software licensed under MIT. It is not affiliated with or endorsed by Stremio, Trakt or TMDB.
 
 The project interoperates with external services and protocols but does not bundle their services, credentials or artwork.
 

@@ -1,4 +1,4 @@
-# Stremio Watch Sync & Repair — maintainer handover
+# Watch Sync & Repair for Stremio — maintainer handover
 
 Public release line: **1.0.0**.
 

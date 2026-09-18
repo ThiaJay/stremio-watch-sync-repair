@@ -53,10 +53,13 @@
         "mode": "stremio-native",
         "stremioWriteEnabled": false,
         "syncMarkUnwatched": true,
+        "autoApplyConfirmedUnwatch": false,
         "confirmUnwatchedCycles": 2,
         "conflictPolicy": "manual",
         "maxChanges": 20,
-        "intervalMinutes": 15
+        "intervalMinutes": 15,
+        "outboundGraceMinutes": 60,
+        "outboundStaleMinutes": 1440
       },
       "resilience": {
         "readRetries": 2,

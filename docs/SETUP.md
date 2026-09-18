@@ -4,7 +4,7 @@
 
 1. Install Node.js 22.14+ or use a trusted project-local runtime you supplied yourself.
 2. Extract the source into a user-controlled folder. Do not run it from a shared/network-writable directory.
-3. On Windows open `Open Stremio Watch Sync & Repair.vbs`. On other platforms run `npm start`, then obtain the local dashboard URL with `node src/cli.js dashboard-url`.
+3. On Windows open `Open Watch Sync & Repair for Stremio.vbs`. On other platforms run `npm start`, then obtain the local dashboard URL with `node src/cli.js dashboard-url`.
 4. The service binds to `127.0.0.1` only. It does not need router/firewall exposure or hosted HTTPS.
 
 `config.json` and `data/` are created locally and excluded from release archives. The data path must remain inside the project tree.

@@ -2,7 +2,7 @@
 
 ## Local management boundary
 
-Stremio Watch Sync & Repair binds only to `127.0.0.1`. Admin routes require a random local bearer token, enforce loopback peer and strict Host checks, reject foreign browser origins and rate-limit failed authentication. Hosted addon/proxy surfaces are absent.
+Watch Sync & Repair for Stremio binds only to `127.0.0.1`. Admin routes require a random local bearer token, enforce loopback peer and strict Host checks, reject foreign browser origins and rate-limit failed authentication. Hosted addon/proxy surfaces are absent.
 
 ## Secrets and local state
 

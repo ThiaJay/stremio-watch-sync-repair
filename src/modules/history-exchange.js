@@ -20,12 +20,12 @@ export function comparisonRows(s,t){
   const keys=[...new Set([...Object.keys(s.states??{}),...Object.keys(t.states??{})])].sort();
   assert(keys.length<=MAX_ROWS,'HISTORY_ROW_LIMIT');
   return keys.map(key=>{
-    const x=parseWatchKey(key),stremio=tri(s.states,key,s.complete===true,false),trakt=tri(t.states,key,t.complete===true,true);
+    const x=parseWatchKey(key),seriesUnknown=(s.unknownIds??[]).includes(x.id),keyUnknown=(s.unresolvedKeys??[]).includes(key),stremio=seriesUnknown||keyUnknown?null:tri(s.states,key,s.complete===true,false),trakt=tri(t.states,key,t.complete===true,true);
     return {key,title:s.labels?.[key]??t.labels?.[key]??key,kind:x.kind,imdb:x.id,season:x.kind==='episode'?x.season:null,episode:x.kind==='episode'?x.episode:null,stremio,trakt,status:statusFor(stremio,trakt),stremioWatchedAt:s.dates?.[key]??'',traktWatchedAt:t.dates?.[key]??'',desired:'',target:'both',note:'',stremioIdentity:s.identity??'',traktIdentity:t.identity??''};
   });
 }
 export function historyBundle(s,t){
-  return {schema:HISTORY_SCHEMA,generatedAt:new Date().toISOString(),sources:{stremio:{identity:s.identity,complete:s.complete===true,at:s.at,errors:clone(s.errors??[])},trakt:{identity:t.identity,complete:t.complete===true,at:t.at}},rows:comparisonRows(s,t)};
+  return {schema:HISTORY_SCHEMA,generatedAt:new Date().toISOString(),sources:{stremio:{identity:s.identity,complete:s.complete===true,at:s.at,errors:clone(s.errors??[]),unknownIds:clone(s.unknownIds??[]),unresolvedKeys:clone(s.unresolvedKeys??[]),nonWritableKeys:clone(s.nonWritableKeys??[])},trakt:{identity:t.identity,complete:t.complete===true,at:t.at}},rows:comparisonRows(s,t)};
 }
 function csvCell(value){
   let s=value===null?'':String(value??'');
@@ -72,8 +72,8 @@ export function manualOperations(imported,s,t){
   if(imported.sources?.stremio?.identity)assert(imported.sources.stremio.identity===s.identity,'STREMIO_EXPORT_ACCOUNT_CHANGED');
   if(imported.sources?.trakt?.identity)assert(imported.sources.trakt.identity===t.identity,'TRAKT_EXPORT_ACCOUNT_CHANGED');
   const operations=[],skipped=[];
-  for(const d of imported.decisions){const parsed=parseWatchKey(d.key),wantsS=d.target!=='trakt',wantsT=d.target!=='stremio',hasState=Object.hasOwn(s.states,d.key),present=Array.isArray(s.presentIds)?s.presentIds.includes(parsed.id):hasState,unresolved=(s.unknownIds??[]).includes(parsed.id);
-    if(wantsS){if(!present)skipped.push({key:d.key,target:'stremio',code:'STREMIO_ITEM_NOT_PRESENT'});else if(unresolved)skipped.push({key:d.key,target:'stremio',code:'STREMIO_WATCH_STATE_UNRESOLVED'});else if(!hasState&&!d.desired)skipped.push({key:d.key,target:'stremio',code:'STREMIO_STATE_UNKNOWN'});else if((s.states[d.key]===true)!==d.desired)operations.push({target:'stremio',key:d.key,desired:d.desired,watchedAt:t.dates?.[d.key]??null,manual:true});}
+  for(const d of imported.decisions){const parsed=parseWatchKey(d.key),wantsS=d.target!=='trakt',wantsT=d.target!=='stremio',hasState=Object.hasOwn(s.states,d.key),present=Array.isArray(s.presentIds)?s.presentIds.includes(parsed.id):hasState,unresolved=(s.unknownIds??[]).includes(parsed.id)||(s.unresolvedKeys??[]).includes(d.key),nonWritable=(s.nonWritableKeys??[]).includes(d.key);
+    if(wantsS){if(!present)skipped.push({key:d.key,target:'stremio',code:'STREMIO_ITEM_NOT_PRESENT'});else if(unresolved)skipped.push({key:d.key,target:'stremio',code:'STREMIO_WATCH_STATE_UNRESOLVED'});else if(nonWritable&&((s.states[d.key]===true)!==d.desired))skipped.push({key:d.key,target:'stremio',code:'STREMIO_WATCH_STATE_NONWRITABLE'});else if(!hasState&&!d.desired)skipped.push({key:d.key,target:'stremio',code:'STREMIO_STATE_UNKNOWN'});else if((s.states[d.key]===true)!==d.desired)operations.push({target:'stremio',key:d.key,desired:d.desired,watchedAt:t.dates?.[d.key]??null,manual:true});}
     if(wantsT){const current=t.states[d.key]===true;if(current!==d.desired)skipped.push({key:d.key,target:'trakt',code:'STREMIO_NATIVE_OUTBOUND_PENDING'});}
   }
   return {operations,skipped};

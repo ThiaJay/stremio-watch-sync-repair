@@ -3,16 +3,28 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Local Stremio watched-state reconciliation with Trakt and reviewed stale-poster repair",
+  "description": "Stremio-native watched-state reconciliation reference harness with reviewed library repair",
   "license": "MIT",
-  "keywords": ["stremio", "trakt", "watched-history", "sync", "repair"],
-  "engines": {"node": ">=22.14.0"},
+  "keywords": [
+    "stremio",
+    "trakt",
+    "watched-history",
+    "sync",
+    "repair"
+  ],
+  "engines": {
+    "node": ">=22.14.0"
+  },
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test test/*.test.js",
     "check": "node src/cli.js check",
     "setup": "node src/cli.js init",
     "status": "node src/cli.js status",
-    "verify": "node scripts/verify-release.js"
+    "verify": "node scripts/verify-release.js",
+    "pair:stremio:start": "node src/cli.js pair-stremio-start",
+    "pair:stremio:poll": "node src/cli.js pair-stremio-poll",
+    "pair:trakt:start": "node src/cli.js pair-trakt-start",
+    "pair:trakt:poll": "node src/cli.js pair-trakt-poll"
   }
 }

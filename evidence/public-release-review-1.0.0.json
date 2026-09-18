@@ -1,12 +1,12 @@
 {
-  "product": "Stremio Watch Sync & Repair",
+  "product": "Watch Sync & Repair for Stremio",
   "version": "1.0.0",
-  "releaseType": "COMMUNITY_RELEASE",
-  "at": "2026-09-17T23:52:46.811355+00:00",
-  "scope": "Stremio-native watched-state reconciliation, stale stored-poster repair, history exchange, safety and resilience",
+  "releaseType": "COMMUNITY_REFERENCE_UPSTREAM_DISCUSSION_READY",
+  "at": "2026-09-18T09:48:33.576484+00:00",
+  "scope": "Stremio-native watched-state reconciliation reference, reviewed stale-poster repair, history exchange, safety, resilience and upstream behavior specification",
   "automatedTests": {
-    "tests": 146,
-    "pass": 146,
+    "tests": 175,
+    "pass": 175,
     "fail": 0,
     "skipped": 0
   },
@@ -19,60 +19,48 @@
     "javascriptFailures": 0,
     "powershell": "PASSED"
   },
+  "privacyScan": {
+    "publicFilesScanned": 196,
+    "privateValuesChecked": 5,
+    "leakFiles": 0
+  },
+  "architecture": {
+    "addon": false,
+    "deviceDaemon": false,
+    "hostedSyncService": false,
+    "target": "Stremio Core/account-native"
+  },
   "nativeTrakt": {
     "mode": "stremio-native",
     "userDeveloperApplicationRequired": false,
     "vipRequiredByTool": false,
     "stremioOwnsOAuth": true,
     "directTraktApiMutation": false,
-    "linkedTokenPersistedByTool": false,
-    "nativeHistoryReadLiveVerified": true,
-    "liveVerificationExternalWrites": 0
+    "linkedTokenPersistedByTool": false
   },
-  "migration": {
-    "liveConfigSchema": 3,
-    "oldBaselineEncryptedBackup": true,
-    "deprecatedDirectTraktSecretsPurged": true,
-    "watchedDataRetained": true,
-    "externalWrites": 0
+  "multiDevice": {
+    "doubleReadStableSnapshot": true,
+    "perItemFreshReadBeforeWrite": true,
+    "secondImmediatePrewriteRead": true,
+    "postWriteReadback": true,
+    "concurrentDriftAborts": true
   },
-  "safeDefaults": {
-    "host": "127.0.0.1",
-    "scheduleEnabled": false,
-    "libraryWrites": false,
-    "nonAtomicWriteAcknowledged": false,
-    "watchedRepairWrites": false,
-    "writeHold": null,
-    "publicReady": false
-  },
-  "privacyScan": {
-    "publicFilesScanned": 73,
-    "privateValuesChecked": 5,
-    "leakFiles": 0
-  },
-  "sourceSurface": {
-    "hostedAddonRoutes": false,
-    "arbitraryUrlProxy": false,
-    "publicListener": false,
-    "legacySpoilerCatalogRuntime": false,
-    "dynamicCodeEvaluation": false,
-    "directTraktApiHost": false
-  },
-  "tmdbAttribution": {
-    "approvedPrimaryShortBlueLogoBundledUnmodified": true,
-    "faqNoticePresent": true,
-    "apiTermsNoticePresent": true
+  "mapping": {
+    "cinemetaPrimary": true,
+    "validatedMappingRegistry": true,
+    "nonEpisodePositionsPreserved": true,
+    "catalogDriftFallbackOnlyWhenProven": true,
+    "duplicateIdentityKnownStateMayBeNonWritable": true,
+    "numberingMismatchIsolated": true
   },
   "resilience": {
     "boundedReadRetries": true,
     "retryAfterBounded": true,
     "sourceCircuitCooldown": true,
-    "metadata404FallbackExplicit": true,
-    "securityFailureFallbackBlocked": true,
-    "posterReachabilityAndMime": true,
-    "cinemetaValidatedCacheOnlyFallback": true,
-    "unprovedSeriesIsolated": true,
-    "nativeTraktOutageFailsClosed": true
+    "partialHistoryRejected": true,
+    "malformedHistoryRejected": true,
+    "sourceIdentityRebaseline": true,
+    "largeBacklogBoundedBatchConvergence": true
   },
   "storage": {
     "aes256gcm": true,
@@ -82,14 +70,20 @@
     "projectLocalState": true,
     "windowsRecoverableAtomicReplace": true
   },
-  "ci": {
-    "readOnlyPermissions": true,
-    "actionsPinnedToFullCommitSha": true,
-    "packageManagerCache": false,
-    "nodeMatrix": [
-      22,
-      24,
-      26
-    ]
-  }
+  "surface": {
+    "hostedAddonRoutes": false,
+    "arbitraryUrlProxy": false,
+    "publicListener": false,
+    "deviceWatchdog": false,
+    "containerWorker": false,
+    "dynamicCodeEvaluation": false
+  },
+  "upstream": {
+    "contributingReviewed": true,
+    "issueMap": "upstream/ISSUE-MAP.md",
+    "behaviorSpec": "upstream/BEHAVIOUR-SPEC.md",
+    "coreOutline": "upstream/CORE-CHANGE-OUTLINE.md",
+    "compliance": "docs/STREMIO-COMPLIANCE.md"
+  },
+  "privateOperationalEvidenceIncluded": false
 }

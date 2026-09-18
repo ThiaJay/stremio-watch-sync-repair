@@ -1,13 +1,13 @@
-<p align="center"><img src="assets/release-banner.svg" alt="Stremio Watch Sync &amp; Repair — Community Release 1.0.0" width="100%"></p>
+<p align="center"><img src="assets/release-banner.svg" alt="Watch Sync &amp; Repair for Stremio — Community Release 1.0.0" width="100%"></p>
 
-# Stremio Watch Sync & Repair
+# Watch Sync & Repair for Stremio
 
-A local companion for two jobs that Stremio installations can otherwise leave inconsistent:
+A community reference implementation and one-time account repair harness for two jobs that Stremio installations can otherwise leave inconsistent:
 
 1. reconcile supported **watched state** using Stremio's existing native Trakt integration; and
 2. repair reviewed **stale poster URLs** already stored in Stremio LibraryItems.
 
-It is **not** a streaming addon, metadata replacement, proxy, recommendation engine or playback scrobbler. There are no public addon endpoints. Management binds to `127.0.0.1` only.
+It is **not** a streaming addon, metadata replacement, proxy, recommendation engine or playback scrobbler. There are no public addon endpoints. The optional management dashboard binds to `127.0.0.1` only. It is a reference, diagnostic and one-time repair harness; it is not the intended permanent cross-device sync authority.
 
 ## Native Trakt integration
 
@@ -40,19 +40,23 @@ See `docs/RESILIENCE.md` and `docs/THREAT-MODEL.md` for the detailed failure mat
 
 ## Download
 
-The supported public build is **1.0.0**. Download the source ZIP and matching SHA-256 file from [GitHub Releases](https://github.com/ThiaJay/stremio-watch-sync-repair/releases). Verify the checksum before extracting.
+The current hardened reference build is **1.0.0**. Download the source ZIP and matching SHA-256 file from [GitHub Releases](https://github.com/ThiaJay/stremio-watch-sync-repair/releases). Verify the checksum before extracting.
 
 ## Quick start
 
 1. Extract the source into a user-controlled folder.
 2. Copy `config.example.json` to `config.json` if the launcher has not created one.
-3. On Windows, open **`Open Stremio Watch Sync & Repair.vbs`**. Other platforms can run `npm start` and use `npm run status` / `node src/cli.js dashboard-url` locally.
+3. On Windows, open **`Open Watch Sync & Repair for Stremio.vbs`**. Other platforms can run `npm start` and use `npm run status` / `node src/cli.js dashboard-url` locally.
 4. Connect Stremio from the local dashboard. If Trakt is not already linked, choose **Connect Trakt through Stremio** and complete Stremio's normal authorisation flow.
 5. Save an optional metadata source/TMDB token if poster repair is required.
 6. Preview watched reconciliation or poster repair with writes still disabled.
-7. Enable only the specific Stremio write gate needed for a reviewed operation. Return it off afterwards unless you intentionally configure unattended operation.
+7. Use **Compare Stremio ↔ Trakt** for a reviewed reconciliation or the hardened `reconcile-safe-now` CLI for a one-time positive-only account repair. The production cross-device solution belongs in Stremio Core/account integration.
 
 Safe older configs and the old `STREMIO_GUARD_CONFIG` / `GUARD_MASTER_KEY` environment aliases are accepted for migration. Deprecated direct-Trakt credentials are purged during native-integration migration; an old reconciliation baseline is preserved as an encrypted recovery backup and re-baselined safely.
+
+## Cross-device strategy
+
+Corrections made by the reference harness are written to the shared Stremio account and therefore appear on every client using that account. The harness is not intended to stay running on one device. The permanent solution is the native Stremio Core/account fix described in `docs/UPSTREAM-STREMIO.md`.
 
 ## Community customisation
 

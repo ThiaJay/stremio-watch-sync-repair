@@ -26,12 +26,19 @@ test('disabling a scheduler generation stops queued work',async()=>{
  await Runtime.prototype.scheduledPass.call(rt,p,new Map(),1);
  assert.deepEqual(calls,['watched']);
 });
-test('scheduler never auto-applies a truncated plan',async()=>{
+test('scheduler keeps truncated metadata repair manual but advances safe watched repairs in bounded batches',async()=>{
  const {p,rt,calls}=fixture();
  p.libraryRepair.writeEnabled=true;p.libraryRepair.allowNonAtomicAccountWrites=true;p.trakt.stremioWriteEnabled=true;
- rt.plan=async(_id,kind)=>{calls.push(kind);return {id:'plan',digest:'digest',operations:[kind==='repair'?{id:'tt12345'}:{key:'movie:tt12345',desired:true,dateEstimated:false}],conflicts:[],remaining:1};};
+ rt.plan=async(_id,kind)=>{calls.push(kind);return {id:'plan',digest:'digest',operations:[kind==='repair'?{id:'tt12345'}:{target:'stremio',key:'movie:tt12345',desired:true}],conflicts:[],remaining:1};};
  await Runtime.prototype.scheduledPass.call(rt,p,new Map(),1);
- assert.deepEqual(calls,['watched','repair','sync']);
+ assert.deepEqual(calls,['watched','repair','sync','write']);
+});
+test('scheduler requests a short continuation after applying a partial watched batch',async()=>{
+ const {p,rt}=fixture();p.modules.watchedState=false;p.modules.libraryRepair=false;p.trakt.stremioWriteEnabled=true;
+ rt.plan=async()=>({id:'plan',digest:'digest',operations:[{target:'stremio',key:'movie:tt12345',desired:true}],conflicts:[],remaining:5});
+ rt.apply=async()=>({});
+ const due=new Map(),before=Date.now();await Runtime.prototype.scheduledPass.call(rt,p,due,1);const delay=due.get('traktBridge')-before;
+ assert.ok(delay>=29000&&delay<=32000,delay);
 });
 test('scheduler may auto-apply a complete positive sync plan',async()=>{
  const {p,rt,calls}=fixture();p.modules.watchedState=false;p.modules.libraryRepair=false;p.trakt.stremioWriteEnabled=true;
@@ -43,3 +50,8 @@ test('scheduler may auto-apply a complete positive sync plan',async()=>{
  const snapshot=snapshotItem(row,metadata);
  assert.deepEqual(snapshot.dates,{});
 });
+
+test('scheduler auto-applies a confirmed inbound unwatch only when explicitly enabled',async()=>{const {p,rt,calls}=fixture();p.modules.watchedState=false;p.modules.libraryRepair=false;p.trakt.stremioWriteEnabled=true;p.trakt.autoApplyConfirmedUnwatch=true;rt.plan=async(_id,kind)=>{calls.push(kind);return {id:'plan',digest:'digest',operations:[{target:'stremio',key:'movie:tt12345',desired:false}],conflicts:[],remaining:0};};rt.apply=async(_id,_plan,_digest,ack)=>{calls.push(ack?.ackRemovals===true?'unwatch-write':'unsafe-write');};await Runtime.prototype.scheduledPass.call(rt,p,new Map(),1);assert.deepEqual(calls,['sync','unwatch-write']);});
+test('scheduler leaves confirmed inbound unwatch for review when automatic unwatch is disabled',async()=>{const {p,rt,calls}=fixture();p.modules.watchedState=false;p.modules.libraryRepair=false;p.trakt.stremioWriteEnabled=true;p.trakt.autoApplyConfirmedUnwatch=false;rt.plan=async(_id,kind)=>{calls.push(kind);return {id:'plan',digest:'digest',operations:[{target:'stremio',key:'movie:tt12345',desired:false}],conflicts:[],remaining:0};};await Runtime.prototype.scheduledPass.call(rt,p,new Map(),1);assert.deepEqual(calls,['sync']);});
+
+test('one-shot reconciliation policy never authorises removals or direct Trakt writes',()=>{const p=defaultProfile();p.trakt.stremioWriteEnabled=true;p.trakt.syncMarkUnwatched=false;p.trakt.autoApplyConfirmedUnwatch=false;assert.equal(p.trakt.syncMarkUnwatched,false);assert.equal(p.trakt.autoApplyConfirmedUnwatch,false);});

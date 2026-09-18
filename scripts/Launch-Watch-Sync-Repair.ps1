@@ -6,7 +6,7 @@ if(!(Test-Path -LiteralPath $node)){$node=(Get-Command node -ErrorAction Stop).S
 Push-Location -LiteralPath $root
 try {
     $major=[int]((& $node --version).TrimStart('v').Split('.')[0])
-    if($major -lt 22){throw 'Stremio Watch Sync & Repair requires Node 22 or newer.'}
+    if($major -lt 22){throw 'Watch Sync & Repair for Stremio requires Node 22 or newer.'}
     $configPath=if($env:STREMIO_WATCH_SYNC_REPAIR_CONFIG){$env:STREMIO_WATCH_SYNC_REPAIR_CONFIG}elseif($env:STREMIO_GUARD_CONFIG){$env:STREMIO_GUARD_CONFIG}else{Join-Path $root 'config.json'}
     $dataSetting='./data'
     if(Test-Path -LiteralPath $configPath){$cfg=Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json;if($cfg.server.dataDir){$dataSetting=[string]$cfg.server.dataDir}}
@@ -36,10 +36,10 @@ try {
         }
     }
     & $node (Join-Path $PSScriptRoot 'launch.mjs') $Action
-    if($LASTEXITCODE -ne 0){throw 'Stremio Watch Sync & Repair could not start or stop. Check data\runtime\server-error.log and docs\RECOVERY.md.'}
+    if($LASTEXITCODE -ne 0){throw 'Watch Sync & Repair for Stremio could not start or stop. Check data\runtime\server-error.log and docs\RECOVERY.md.'}
 } catch {
     if($Action -eq 'serve'){[Console]::Error.WriteLine($_.Exception.Message);exit 1}
     Add-Type -AssemblyName System.Windows.Forms
-    [System.Windows.Forms.MessageBox]::Show($_.Exception.Message,'Stremio Watch Sync & Repair') | Out-Null
+    [System.Windows.Forms.MessageBox]::Show($_.Exception.Message,'Watch Sync & Repair for Stremio') | Out-Null
     exit 1
 } finally {Pop-Location}
