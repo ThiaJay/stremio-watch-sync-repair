@@ -1,0 +1,25 @@
+{
+  "foundationSchema": 1,
+  "id": "watch-sync-repair",
+  "name": "Watch Sync & Repair for Stremio",
+  "classification": "prototype-retired",
+  "status": "SUPERSEDED_BY_SCOPE_SPLIT",
+  "domain": "historical-combined",
+  "crossPlatform": true,
+  "productionAuthority": "none",
+  "deviceDependency": "none",
+  "scope": [
+    "historical combined watched-state and stored-poster reference implementation"
+  ],
+  "forbiddenScope": [
+    "new feature development",
+    "new releases as the active watched-state owner",
+    "new poster-repair development"
+  ],
+  "releaseChannels": [],
+  "notes": [
+    "Watched-state semantics moved to ThiaJay/stremio-watch-state-reference.",
+    "Stored LibraryItem artwork repair moved to ThiaJay/stremio-library-artwork-repair.",
+    "Version 1.0.1 remains available as historical evidence only."
+  ]
+}

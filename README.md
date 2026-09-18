@@ -2,6 +2,8 @@
 
 # Watch Sync & Repair for Stremio
 
+> **Historical combined predecessor.** Version 1.0.1 remains available for audit and regression history, though active development is now split by state ownership. Watched-state reconciliation and guarded whole-series/season watched actions live in [Stremio Watch State Reference](https://github.com/ThiaJay/stremio-watch-state-reference). One-time stored LibraryItem poster repair lives in [Library Artwork Repair for Stremio](https://github.com/ThiaJay/stremio-library-artwork-repair). New work must not recombine these domains here.
+
 A community reference implementation and one-time account repair harness for two jobs that Stremio installations can otherwise leave inconsistent:
 
 1. reconcile supported **watched state** using Stremio's existing native Trakt integration; and
