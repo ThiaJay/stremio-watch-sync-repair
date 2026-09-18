@@ -1,6 +1,6 @@
 # Watch Sync & Repair for Stremio — maintainer handover
 
-Public release line: **1.0.0**.
+Public release line: **1.0.1**.
 
 The product owns four areas: native watched-state reconciliation, reviewed stale-poster repair, JSON/CSV history exchange and their safety/resilience infrastructure.
 

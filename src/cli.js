@@ -8,7 +8,7 @@ const command=process.argv[2]??'help';
 function initialConfig(file){const c=defaultConfig(),custom=path.resolve(file)!==path.join(ROOT,'config.json');if(custom){const data=path.join(path.dirname(file),'data'),rel=path.relative(ROOT,data);assert(rel&&!rel.startsWith('..'+path.sep)&&!path.isAbsolute(rel),'CUSTOM_CONFIG_MUST_BE_PROJECT_LOCAL');c.server.dataDir='./'+rel.replaceAll('\\','/');}return c;}
 try{
   const file=process.env.STREMIO_WATCH_SYNC_REPAIR_CONFIG||process.env.STREMIO_GUARD_CONFIG||path.join(ROOT,'config.json');
-  if(command==='check'){const c=new ConfigStore(file);console.log(JSON.stringify({ok:true,version:'1.0.0',profiles:c.get().profiles.map(p=>p.id),configurationOnly:true,externalWrites:0}));}
+  if(command==='check'){const c=new ConfigStore(file);console.log(JSON.stringify({ok:true,version:'1.0.1',profiles:c.get().profiles.map(p=>p.id),configurationOnly:true,externalWrites:0}));}
   else if(command==='init'){
     if(!fs.existsSync(file))atomicWrite(file,initialConfig(file));const rt=new Runtime({configStore:new ConfigStore(file)});console.log(JSON.stringify({created:true,config:file,dataDir:rt.store.dir,scheduleEnabled:rt.config.server.scheduleEnabled,externalWrites:0}));
   }else if(command==='status'){const rt=new Runtime({configStore:new ConfigStore(file)});console.log(JSON.stringify(rt.status(),null,2));}

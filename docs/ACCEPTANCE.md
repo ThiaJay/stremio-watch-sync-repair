@@ -1,4 +1,4 @@
-# Public release acceptance — 1.0.0
+# Public release acceptance — 1.0.1
 
 Acceptance is separated into automated regression/adversarial coverage, migration checks and private operational interoperability. Public evidence contains no account identifiers, tokens, viewing history or screenshots.
 

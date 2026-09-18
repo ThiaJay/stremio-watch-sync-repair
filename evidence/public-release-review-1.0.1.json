@@ -1,6 +1,6 @@
 {
   "product": "Watch Sync & Repair for Stremio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "releaseType": "COMMUNITY_REFERENCE_UPSTREAM_DISCUSSION_READY",
   "at": "2026-09-18T09:48:33.576484+00:00",
   "scope": "Stremio-native watched-state reconciliation reference, reviewed stale-poster repair, history exchange, safety, resilience and upstream behavior specification",
@@ -20,7 +20,7 @@
     "powershell": "PASSED"
   },
   "privacyScan": {
-    "publicFilesScanned": 196,
+    "payloadFilesScanned": 79,
     "privateValuesChecked": 5,
     "leakFiles": 0
   },

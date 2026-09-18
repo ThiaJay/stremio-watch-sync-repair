@@ -1,4 +1,4 @@
-# Watch Sync & Repair for Stremio 1.0.0
+# Watch Sync & Repair for Stremio 1.0.1
 
 This is the hardened community reference implementation and account-repair harness for a Stremio-native watched-state fix. It is not a Stremio addon, device daemon or hosted sync service.
 
@@ -29,4 +29,4 @@ Device autostart, Docker/systemd worker and hosted-watchdog designs were retired
 
 The final source suite passes **175/175 tests** with zero failures or skips. There are zero runtime npm dependencies and npm audit --omit=dev reports zero known vulnerabilities. Public syntax and real-value secret-leak gates also pass.
 
-See RELEASE-STATUS.json, evidence/public-release-review-1.0.0.json and docs/STREMIO-COMPLIANCE.md.
+See RELEASE-STATUS.json, evidence/public-release-review-1.0.1.json and docs/STREMIO-COMPLIANCE.md.

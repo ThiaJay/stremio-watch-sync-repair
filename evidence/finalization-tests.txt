@@ -1,883 +1,883 @@
 
-> stremio-watch-sync-repair@1.0.0 test
+> stremio-watch-sync-repair@1.0.1 test
 > node --test test/*.test.js
 
 TAP version 13
 # Subtest: official Stremio video-id catalogue is batched and normalized for watched bitmaps
 ok 1 - official Stremio video-id catalogue is batched and normalized for watched bitmaps
   ---
-  duration_ms: 7.9786
+  duration_ms: 4.1008
   ...
 # Subtest: malformed official video IDs fail closed rather than shifting watched bits
 ok 2 - malformed official video IDs fail closed rather than shifting watched bits
   ---
-  duration_ms: 1.0555
+  duration_ms: 0.727
   ...
 # Subtest: a failed scheduled module does not prevent the next module from running
 ok 3 - a failed scheduled module does not prevent the next module from running
   ---
-  duration_ms: 3.5128
+  duration_ms: 2.6077
   ...
 # Subtest: scheduler honours separate module intervals
 ok 4 - scheduler honours separate module intervals
   ---
-  duration_ms: 0.3326
+  duration_ms: 0.2807
   ...
 # Subtest: disabling a scheduler generation stops queued work
 ok 5 - disabling a scheduler generation stops queued work
   ---
-  duration_ms: 0.3735
+  duration_ms: 0.2291
   ...
 # Subtest: scheduler keeps truncated metadata repair manual but advances safe watched repairs in bounded batches
 ok 6 - scheduler keeps truncated metadata repair manual but advances safe watched repairs in bounded batches
   ---
-  duration_ms: 0.9599
+  duration_ms: 0.52
   ...
 # Subtest: scheduler requests a short continuation after applying a partial watched batch
 ok 7 - scheduler requests a short continuation after applying a partial watched batch
   ---
-  duration_ms: 0.5682
+  duration_ms: 0.3405
   ...
 # Subtest: scheduler may auto-apply a complete positive sync plan
 ok 8 - scheduler may auto-apply a complete positive sync plan
   ---
-  duration_ms: 0.7326
+  duration_ms: 0.3194
   ...
 # Subtest: a series timestamp is never fabricated as an individual episode watch date
 ok 9 - a series timestamp is never fabricated as an individual episode watch date
   ---
-  duration_ms: 1.1791
+  duration_ms: 0.8703
   ...
 # Subtest: scheduler auto-applies a confirmed inbound unwatch only when explicitly enabled
 ok 10 - scheduler auto-applies a confirmed inbound unwatch only when explicitly enabled
   ---
-  duration_ms: 0.4232
+  duration_ms: 0.3106
   ...
 # Subtest: scheduler leaves confirmed inbound unwatch for review when automatic unwatch is disabled
 ok 11 - scheduler leaves confirmed inbound unwatch for review when automatic unwatch is disabled
   ---
-  duration_ms: 0.6475
+  duration_ms: 0.4671
   ...
 # Subtest: one-shot reconciliation policy never authorises removals or direct Trakt writes
 ok 12 - one-shot reconciliation policy never authorises removals or direct Trakt writes
   ---
-  duration_ms: 0.6972
+  duration_ms: 0.5524
   ...
 # Subtest: history export compares both sources without secrets and includes human labels
 ok 13 - history export compares both sources without secrets and includes human labels
   ---
-  duration_ms: 4.7904
+  duration_ms: 3.6432
   ...
 # Subtest: CSV export can be edited and imported as explicit decisions
 ok 14 - CSV export can be edited and imported as explicit decisions
   ---
-  duration_ms: 4.2061
+  duration_ms: 2.2763
   ...
 # Subtest: new CSV identity columns prevent accidental import into different accounts
 ok 15 - new CSV identity columns prevent accidental import into different accounts
   ---
-  duration_ms: 1.3423
+  duration_ms: 1.069
   ...
 # Subtest: legacy CSV without identity columns remains importable but is fresh-state validated
 ok 16 - legacy CSV without identity columns remains importable but is fresh-state validated
   ---
-  duration_ms: 0.2831
+  duration_ms: 0.3682
   ...
 # Subtest: JSON import preserves account identities and rejects an account change
 ok 17 - JSON import preserves account identities and rejects an account change
   ---
-  duration_ms: 0.6621
+  duration_ms: 1.9121
   ...
 # Subtest: manual import never creates a missing Stremio item or directly writes Trakt
 ok 18 - manual import never creates a missing Stremio item or directly writes Trakt
   ---
-  duration_ms: 0.638
+  duration_ms: 0.6084
   ...
 # Subtest: unknown source state cannot be converted into an unwatched decision automatically
 ok 19 - unknown source state cannot be converted into an unwatched decision automatically
   ---
-  duration_ms: 0.4023
+  duration_ms: 0.5696
   ...
 # Subtest: duplicate and malformed imported keys fail closed
 ok 20 - duplicate and malformed imported keys fail closed
   ---
-  duration_ms: 0.7183
+  duration_ms: 0.6103
   ...
 # Subtest: malformed CSV column counts and conflicting account identities fail closed
 ok 21 - malformed CSV column counts and conflicting account identities fail closed
   ---
-  duration_ms: 0.9922
+  duration_ms: 1.4339
   ...
 # Subtest: CSV export neutralises spreadsheet formula prefixes
 ok 22 - CSV export neutralises spreadsheet formula prefixes
   ---
-  duration_ms: 2.746
+  duration_ms: 0.6896
   ...
 # Subtest: differences-only CSV contains review rows but omits rows already equal
 ok 23 - differences-only CSV contains review rows but omits rows already equal
   ---
-  duration_ms: 0.626
+  duration_ms: 0.4841
   ...
 # Subtest: same complete snapshots need no manual operations when decision already matches
 ok 24 - same complete snapshots need no manual operations when decision already matches
   ---
-  duration_ms: 0.1847
+  duration_ms: 0.2004
   ...
 # Subtest: manual watched import can target an existing Stremio series before it has a local bitmap
 ok 25 - manual watched import can target an existing Stremio series before it has a local bitmap
   ---
-  duration_ms: 0.2582
+  duration_ms: 0.2853
   ...
 # Subtest: manual import never writes an unresolved Stremio series or bypasses native Trakt ownership
 ok 26 - manual import never writes an unresolved Stremio series or bypasses native Trakt ownership
   ---
-  duration_ms: 1.7114
+  duration_ms: 0.2878
   ...
 # Subtest: ambiguous Stremio episode state exports as unknown and cannot be forced through manual import
 ok 27 - ambiguous Stremio episode state exports as unknown and cannot be forced through manual import
   ---
-  duration_ms: 0.7364
+  duration_ms: 0.4146
   ...
 # Subtest: private, loopback, link-local and mapped IPs are blocked
 ok 28 - private, loopback, link-local and mapped IPs are blocked
   ---
-  duration_ms: 8.4927
+  duration_ms: 6.4903
   ...
 # Subtest: credential-bearing, non-HTTPS and disallowed remote hosts are blocked
 ok 29 - credential-bearing, non-HTTPS and disallowed remote hosts are blocked
   ---
-  duration_ms: 1.5339
+  duration_ms: 1.2648
   ...
 # Subtest: DNS response with any private address is rejected
 ok 30 - DNS response with any private address is rejected
   ---
-  duration_ms: 0.578
+  duration_ms: 0.35
   ...
 # Subtest: redirects cannot escape the checked host
 ok 31 - redirects cannot escape the checked host
   ---
-  duration_ms: 1.9575
+  duration_ms: 1.166
   ...
 # Subtest: streamed body size is bounded even without content-length
 ok 32 - streamed body size is bounded even without content-length
   ---
-  duration_ms: 10.9753
+  duration_ms: 6.4186
   ...
 # Subtest: response compression cannot bypass size accounting
 ok 33 - response compression cannot bypass size accounting
   ---
-  duration_ms: 0.7106
+  duration_ms: 0.4997
   ...
 # Subtest: network concurrency has a hard upper bound
 ok 34 - network concurrency has a hard upper bound
   ---
-  duration_ms: 0.4156
+  duration_ms: 0.366
   ...
 # Subtest: a redirect can be inspected only for an explicitly allowed HTTPS OAuth host
 ok 35 - a redirect can be inspected only for an explicitly allowed HTTPS OAuth host
   ---
-  duration_ms: 0.7893
+  duration_ms: 0.4631
   ...
 # Subtest: redirect inspection still rejects HTTP and unlisted targets
 ok 36 - redirect inspection still rejects HTTP and unlisted targets
   ---
-  duration_ms: 1.6763
+  duration_ms: 0.905
   ...
 # Subtest: transient upstream 529 is retryable when the caller permits retries
 ok 37 - transient upstream 529 is retryable when the caller permits retries
   ---
-  duration_ms: 1513.7717
+  duration_ms: 1508.2455
   ...
 # Subtest: Stremio retries idempotent account reads but never datastore writes
 ok 38 - Stremio retries idempotent account reads but never datastore writes
   ---
-  duration_ms: 40.5716
+  duration_ms: 39.0943
   ...
 # Subtest: Retry-After is honoured for retryable GETs and never causes a POST retry
 ok 39 - Retry-After is honoured for retryable GETs and never causes a POST retry
   ---
-  duration_ms: 255.1189
+  duration_ms: 254.6072
   ...
 # Subtest: pairing uses the official api/v2 path
 ok 40 - pairing uses the official api/v2 path
   ---
-  duration_ms: 69.0898
+  duration_ms: 52.4072
   ...
 # Subtest: invalid or expired token for a fresh pairing code means pending, not connected
 ok 41 - invalid or expired token for a fresh pairing code means pending, not connected
   ---
-  duration_ms: 43.4338
+  duration_ms: 58.7704
   ...
 # Subtest: unknown-method errors are not silently retried as pending approval
 ok 42 - unknown-method errors are not silently retried as pending approval
   ---
-  duration_ms: 68.0123
+  duration_ms: 80.6177
   ...
 # Subtest: pairing saves only an actually returned auth key
 ok 43 - pairing saves only an actually returned auth key
   ---
-  duration_ms: 113.1203
+  duration_ms: 102.3753
   ...
 # Subtest: unsafe pairing page URL cannot receive user authorisation
 ok 44 - unsafe pairing page URL cannot receive user authorisation
   ---
-  duration_ms: 27.7735
+  duration_ms: 35.6025
   ...
 # Subtest: pairing poll intervals are enforced
 ok 45 - pairing poll intervals are enforced
   ---
-  duration_ms: 77.8024
+  duration_ms: 69.534
   ...
 # Subtest: preferred metadata language uses safe regional fallback
 ok 46 - preferred metadata language uses safe regional fallback
   ---
-  duration_ms: 3.8254
+  duration_ms: 2.9859
   ...
 # Subtest: scripts remain distinct
 ok 47 - scripts remain distinct
   ---
-  duration_ms: 0.7698
+  duration_ms: 0.4064
   ...
 # Subtest: original language is only used when configured
 ok 48 - original language is only used when configured
   ---
-  duration_ms: 0.6517
+  duration_ms: 0.6424
   ...
 # Subtest: prototype injection and unknown settings fail closed
 ok 49 - prototype injection and unknown settings fail closed
   ---
-  duration_ms: 1.6555
+  duration_ms: 1.4638
   ...
 # Subtest: write settings and scheduling are disabled by default
 ok 50 - write settings and scheduling are disabled by default
   ---
-  duration_ms: 0.2471
+  duration_ms: 0.311
   ...
 # Subtest: config stale revision cannot overwrite newer preferences
 ok 51 - config stale revision cannot overwrite newer preferences
   ---
-  duration_ms: 65.8895
+  duration_ms: 51.85
   ...
 # Subtest: public release is loopback-only and cannot expose removed surfaces
 ok 52 - public release is loopback-only and cannot expose removed surfaces
   ---
-  duration_ms: 0.9469
+  duration_ms: 0.8944
   ...
 # Subtest: state directory must resolve inside the project tree
 ok 53 - state directory must resolve inside the project tree
   ---
-  duration_ms: 1.333
+  duration_ms: 0.668
   ...
 # Subtest: safe v2 config migrates to minimal v3 without enabling removed features
 ok 54 - safe v2 config migrates to minimal v3 without enabling removed features
   ---
-  duration_ms: 1.5592
+  duration_ms: 0.9526
   ...
 # Subtest: v2 public hosting or enabled removed modules refuse migration
 ok 55 - v2 public hosting or enabled removed modules refuse migration
   ---
-  duration_ms: 0.8131
+  duration_ms: 1.0808
   ...
 # Subtest: resilience and host allowlist bounds reject unsafe configuration
 ok 56 - resilience and host allowlist bounds reject unsafe configuration
   ---
-  duration_ms: 1.179
+  duration_ms: 0.6384
   ...
 # Subtest: existing v3 direct-write settings normalize to native Stremio repair mode
 ok 57 - existing v3 direct-write settings normalize to native Stremio repair mode
   ---
-  duration_ms: 0.3006
+  duration_ms: 0.1482
   ...
 # Subtest: interrupted APPLYING plan becomes a durable write hold on restart
 ok 58 - interrupted APPLYING plan becomes a durable write hold on restart
   ---
-  duration_ms: 189.3354
+  duration_ms: 192.7515
   ...
 # Subtest: watched-wins conflict policy cannot be overridden by an unwatched observation
 ok 59 - watched-wins conflict policy cannot be overridden by an unwatched observation
   ---
-  duration_ms: 0.6059
+  duration_ms: 0.6461
   ...
 # Subtest: an APPLYING plan owned by a live process is not misclassified as interrupted
 ok 60 - an APPLYING plan owned by a live process is not misclassified as interrupted
   ---
-  duration_ms: 157.6588
+  duration_ms: 147.1271
   ...
 # Subtest: native Trakt migration backs up old baseline and purges obsolete direct-OAuth secrets
 ok 61 - native Trakt migration backs up old baseline and purges obsolete direct-OAuth secrets
   ---
-  duration_ms: 180.5542
+  duration_ms: 181.4663
   ...
 # Subtest: metadata 404 falls back only to an explicitly configured provider
 ok 62 - metadata 404 falls back only to an explicitly configured provider
   ---
-  duration_ms: 4.4998
+  duration_ms: 3.7746
   ...
 # Subtest: network security failures never trigger metadata fallback
 ok 63 - network security failures never trigger metadata fallback
   ---
-  duration_ms: 1.268
+  duration_ms: 0.6232
   ...
 # Subtest: fallback poster cannot enter an automatic repair plan unless explicitly enabled
 ok 64 - fallback poster cannot enter an automatic repair plan unless explicitly enabled
   ---
-  duration_ms: 1.3633
+  duration_ms: 0.7054
   ...
 # Subtest: validated Stremio episode order survives Cinemeta downtime without consulting generic metadata
 ok 65 - validated Stremio episode order survives Cinemeta downtime without consulting generic metadata
   ---
-  duration_ms: 111.1091
+  duration_ms: 80.1026
   ...
 # Subtest: unproved series mapping is isolated while Cinemeta is unavailable
 ok 66 - unproved series mapping is isolated while Cinemeta is unavailable
   ---
-  duration_ms: 93.0103
+  duration_ms: 115.4312
   ...
 # Subtest: Cinemeta endpoint 404 opens a bounded source cooldown instead of hammering it
 ok 67 - Cinemeta endpoint 404 opens a bounded source cooldown instead of hammering it
   ---
-  duration_ms: 0.5295
+  duration_ms: 0.4511
   ...
 # Subtest: resilience settings are bounded and fail closed when invalid
 ok 68 - resilience settings are bounded and fail closed when invalid
   ---
-  duration_ms: 0.9502
+  duration_ms: 0.836
   ...
 # Subtest: poster 404 or source downtime is a safe skip, never a Stremio write candidate
 ok 69 - poster 404 or source downtime is a safe skip, never a Stremio write candidate
   ---
-  duration_ms: 0.6014
+  duration_ms: 0.5637
   ...
 # Subtest: poster reachability verifies image content and falls back from unsupported HEAD to bounded GET
 ok 70 - poster reachability verifies image content and falls back from unsupported HEAD to bounded GET
   ---
-  duration_ms: 0.7149
+  duration_ms: 0.4868
   ...
 # Subtest: poster reachability rejects a 200 response that is not an image
 ok 71 - poster reachability rejects a 200 response that is not an image
   ---
-  duration_ms: 0.3317
+  duration_ms: 0.2519
   ...
 # Subtest: repair preview makes no account writes
 ok 72 - repair preview makes no account writes
   ---
-  duration_ms: 171.0492
+  duration_ms: 193.1342
   ...
 # Subtest: local companion can safely write a public HTTPS poster without hosting itself
 ok 73 - local companion can safely write a public HTTPS poster without hosting itself
   ---
-  duration_ms: 237.7178
+  duration_ms: 223.1561
   ...
 # Subtest: reviewed mutation is verified and cannot be replayed
 ok 74 - reviewed mutation is verified and cannot be replayed
   ---
-  duration_ms: 148.2098
+  duration_ms: 157.826
   ...
 # Subtest: disabled write permission cannot be bypassed through an apply request
 ok 75 - disabled write permission cannot be bypassed through an apply request
   ---
-  duration_ms: 95.9842
+  duration_ms: 90.5979
   ...
 # Subtest: changed preferences invalidate a saved change plan
 ok 76 - changed preferences invalidate a saved change plan
   ---
-  duration_ms: 74.2711
+  duration_ms: 69.7925
   ...
 # Subtest: one account cannot have competing writer profiles in one instance
 ok 77 - one account cannot have competing writer profiles in one instance
   ---
-  duration_ms: 94.7665
+  duration_ms: 88.0321
   ...
 # Subtest: HTTP administration, addon isolation and fail-closed errors
     # Subtest: health reveals no account state
     ok 1 - health reveals no account state
       ---
-      duration_ms: 11.8998
+      duration_ms: 10.2191
       ...
     # Subtest: security headers are present on local responses
     ok 2 - security headers are present on local responses
       ---
-      duration_ms: 1.9583
+      duration_ms: 1.3264
       ...
     # Subtest: oversized request targets are rejected before routing
     ok 3 - oversized request targets are rejected before routing
       ---
-      duration_ms: 1.4675
+      duration_ms: 1.6712
       ...
     # Subtest: administration rejects missing token
     ok 4 - administration rejects missing token
       ---
-      duration_ms: 3.722
+      duration_ms: 2.1538
       ...
     # Subtest: authenticated dashboard reads state
     ok 5 - authenticated dashboard reads state
       ---
-      duration_ms: 3.9578
+      duration_ms: 2.7712
       ...
     # Subtest: cross-origin administration rejected even with a token
     ok 6 - cross-origin administration rejected even with a token
       ---
-      duration_ms: 1.7552
+      duration_ms: 1.1324
       ...
     # Subtest: DNS rebinding host header rejected
     ok 7 - DNS rebinding host header rejected
       ---
-      duration_ms: 2.1928
+      duration_ms: 1.8849
       ...
     # Subtest: addon surface is absent
     ok 8 - addon surface is absent
       ---
-      duration_ms: 2.6875
+      duration_ms: 1.1318
       ...
     # Subtest: raw image-proxy and arbitrary URL route absent
     ok 9 - raw image-proxy and arbitrary URL route absent
       ---
-      duration_ms: 2.7053
+      duration_ms: 1.5457
       ...
     # Subtest: unsafe body keys rejected
     ok 10 - unsafe body keys rejected
       ---
-      duration_ms: 2.8793
+      duration_ms: 2.2605
       ...
     # Subtest: dashboard carries required TMDB About/Credits attribution
     ok 11 - dashboard carries required TMDB About/Credits attribution
       ---
-      duration_ms: 1.643
+      duration_ms: 1.116
       ...
     # Subtest: approved TMDB logo asset is served locally as SVG
     ok 12 - approved TMDB logo asset is served locally as SVG
       ---
-      duration_ms: 1.195
+      duration_ms: 0.8512
       ...
     # Subtest: status identifies the native Stremio Trakt mode without direct OAuth-client fields
     ok 13 - status identifies the native Stremio Trakt mode without direct OAuth-client fields
       ---
-      duration_ms: 3.0857
+      duration_ms: 2.8429
       ...
     # Subtest: management API rejects obsolete direct Trakt OAuth secrets
     ok 14 - management API rejects obsolete direct Trakt OAuth secrets
       ---
-      duration_ms: 3.5021
+      duration_ms: 1.6774
       ...
     # Subtest: server does not provide write controls without authentication
     ok 15 - server does not provide write controls without authentication
       ---
-      duration_ms: 2.7163
+      duration_ms: 1.4054
       ...
     1..15
 ok 78 - HTTP administration, addon isolation and fail-closed errors
   ---
-  duration_ms: 103.8778
+  duration_ms: 86.7246
   ...
 # Subtest: poster repair refuses a local or non-HTTPS poster URL before creating a write plan
 ok 79 - poster repair refuses a local or non-HTTPS poster URL before creating a write plan
   ---
-  duration_ms: 57.9956
+  duration_ms: 55.2081
   ...
 # Subtest: secrets are encrypted at rest and reopen correctly
 ok 80 - secrets are encrypted at rest and reopen correctly
   ---
-  duration_ms: 68.9091
+  duration_ms: 52.6146
   ...
 # Subtest: profiles cannot read another profile secrets
 ok 81 - profiles cannot read another profile secrets
   ---
-  duration_ms: 66.8883
+  duration_ms: 56.5253
   ...
 # Subtest: moving encrypted bytes between profiles fails authentication
 ok 82 - moving encrypted bytes between profiles fails authentication
   ---
-  duration_ms: 69.0771
+  duration_ms: 50.2174
   ...
 # Subtest: modified encrypted state is rejected rather than treated empty
 ok 83 - modified encrypted state is rejected rather than treated empty
   ---
-  duration_ms: 77.9617
+  duration_ms: 61.4715
   ...
 # Subtest: traversal in storage keys is rejected
 ok 84 - traversal in storage keys is rejected
   ---
-  duration_ms: 42.1829
+  duration_ms: 43.493
   ...
 # Subtest: service lock ownership is enforced
 ok 85 - service lock ownership is enforced
   ---
-  duration_ms: 42.0597
+  duration_ms: 61.7753
   ...
 # Subtest: lock release does not remove a replaced owner lock
 ok 86 - lock release does not remove a replaced owner lock
   ---
-  duration_ms: 58.2167
+  duration_ms: 78.5308
   ...
 # Subtest: poster changes preserve every other known and unknown field
 ok 87 - poster changes preserve every other known and unknown field
   ---
-  duration_ms: 81.6936
+  duration_ms: 67.7141
   ...
 # Subtest: newer playback progress aborts before a write
 ok 88 - newer playback progress aborts before a write
   ---
-  duration_ms: 31.717
+  duration_ms: 21.6176
   ...
 # Subtest: recently active item is not modified
 ok 89 - recently active item is not modified
   ---
-  duration_ms: 22.8753
+  duration_ms: 44.7851
   ...
 # Subtest: unexpected progress after writing sets a hold and never overwrites it with backup
 ok 90 - unexpected progress after writing sets a hold and never overwrites it with backup
   ---
-  duration_ms: 46.7892
+  duration_ms: 50.1423
   ...
 # Subtest: safety does not allow changing account identity or library membership
 ok 91 - safety does not allow changing account identity or library membership
   ---
-  duration_ms: 0.4958
+  duration_ms: 0.3749
   ...
 # Subtest: a forged metadata whitelist cannot permit progress changes
 ok 92 - a forged metadata whitelist cannot permit progress changes
   ---
-  duration_ms: 17.0691
+  duration_ms: 11.8908
   ...
 # Subtest: repair requires acknowledgement of non-atomic account writes
 ok 93 - repair requires acknowledgement of non-atomic account writes
   ---
-  duration_ms: 18.0435
+  duration_ms: 12.12
   ...
 # Subtest: mutex releases after failure and rejects overlapping operations
 ok 94 - mutex releases after failure and rejects overlapping operations
   ---
-  duration_ms: 0.3482
+  duration_ms: 0.2708
   ...
 # Subtest: audit redacts credential-bearing URLs and keys
 ok 95 - audit redacts credential-bearing URLs and keys
   ---
-  duration_ms: 0.1359
+  duration_ms: 0.1164
   ...
 # Subtest: hardlinked encrypted state is rejected
 ok 96 - hardlinked encrypted state is rejected
   ---
-  duration_ms: 28.9367
+  duration_ms: 23.0983
   ...
 # Subtest: atomic JSON replacement works on an existing file and leaves no recovery handoff
 ok 97 - atomic JSON replacement works on an existing file and leaves no recovery handoff
   ---
-  duration_ms: 32.1792
+  duration_ms: 34.3614
   ...
 # Subtest: missing primary JSON recovers a valid interrupted replacement handoff
 ok 98 - missing primary JSON recovers a valid interrupted replacement handoff
   ---
-  duration_ms: 14.9603
+  duration_ms: 13.8592
   ...
 # Subtest: native Trakt connect opens Stremio authorisation and needs no developer application
 ok 99 - native Trakt connect opens Stremio authorisation and needs no developer application
   ---
-  duration_ms: 71.0584
+  duration_ms: 57.796
   ...
 # Subtest: native Trakt snapshot reads history only through the Stremio Trakt proxy
 ok 100 - native Trakt snapshot reads history only through the Stremio Trakt proxy
   ---
-  duration_ms: 47.9549
+  duration_ms: 82.1014
   ...
 # Subtest: native Trakt state is detected from the Stremio account and only non-secret status is cached
 ok 101 - native Trakt state is detected from the Stremio account and only non-secret status is cached
   ---
-  duration_ms: 45.4865
+  duration_ms: 41.8315
   ...
 # Subtest: missing or expired Stremio-linked Trakt state fails closed and requests Stremio reconnection
 ok 102 - missing or expired Stremio-linked Trakt state fails closed and requests Stremio reconnection
   ---
-  duration_ms: 68.911
+  duration_ms: 77.8889
   ...
 # Subtest: native adapter exposes no direct Trakt mutation or OAuth-client API
 ok 103 - native adapter exposes no direct Trakt mutation or OAuth-client API
   ---
-  duration_ms: 46.5563
+  duration_ms: 36.8564
   ...
 # Subtest: native Stremio Trakt history 404 opens bounded cooldown and never becomes empty history
 ok 104 - native Stremio Trakt history 404 opens bounded cooldown and never becomes empty history
   ---
-  duration_ms: 84.6547
+  duration_ms: 62.539
   ...
 # Subtest: native Trakt snapshot rejects partial bucket responses instead of treating a missing type as empty history
 ok 105 - native Trakt snapshot rejects partial bucket responses instead of treating a missing type as empty history
   ---
-  duration_ms: 40.4299
+  duration_ms: 71.9115
   ...
 # Subtest: native Trakt snapshot rejects duplicated type buckets and duplicate watched identities
 ok 106 - native Trakt snapshot rejects duplicated type buckets and duplicate watched identities
   ---
-  duration_ms: 60.8455
+  duration_ms: 51.9533
   ...
 # Subtest: native Trakt snapshot rejects malformed watched timestamps and impossible episode numbers
 ok 107 - native Trakt snapshot rejects malformed watched timestamps and impossible episode numbers
   ---
-  duration_ms: 58.7955
+  duration_ms: 53.226
   ...
 # Subtest: dashboard script constant DOM references all exist in the HTML
 ok 108 - dashboard script constant DOM references all exist in the HTML
   ---
-  duration_ms: 2.4186
+  duration_ms: 1.5623
   ...
 # Subtest: TMDB credits include approved local logo and both current attribution notices
 ok 109 - TMDB credits include approved local logo and both current attribution notices
   ---
-  duration_ms: 0.3335
+  duration_ms: 0.2912
   ...
 # Subtest: bundled TMDB SVG contains no active or external-script payload
 ok 110 - bundled TMDB SVG contains no active or external-script payload
   ---
-  duration_ms: 0.1952
+  duration_ms: 0.2805
   ...
 # Subtest: dashboard requires only Stremio native Trakt integration and contains no developer-app credential form
 ok 111 - dashboard requires only Stremio native Trakt integration and contains no developer-app credential form
   ---
-  duration_ms: 1.7892
+  duration_ms: 0.2649
   ...
 # Subtest: project branding SVGs remain valid inert vectors and advertise native no-VIP Trakt setup
 ok 112 - project branding SVGs remain valid inert vectors and advertise native no-VIP Trakt setup
   ---
-  duration_ms: 1.0742
+  duration_ms: 0.7352
   ...
 # Subtest: watched bitmap round-trip preserves episode flags
 ok 113 - watched bitmap round-trip preserves episode flags
   ---
-  duration_ms: 4.2513
+  duration_ms: 2.9036
   ...
 # Subtest: new episodes appended after bitmap anchor remain unwatched
 ok 114 - new episodes appended after bitmap anchor remain unwatched
   ---
-  duration_ms: 0.8062
+  duration_ms: 0.5843
   ...
 # Subtest: missing bitmap anchor cannot silently reset history
 ok 115 - missing bitmap anchor cannot silently reset history
   ---
-  duration_ms: 1.0997
+  duration_ms: 0.5216
   ...
 # Subtest: corrupted compressed watched bitmap fails closed
 ok 116 - corrupted compressed watched bitmap fails closed
   ---
-  duration_ms: 1.3302
+  duration_ms: 0.6924
   ...
 # Subtest: episode order follows season and episode rather than provider array order
 ok 117 - episode order follows season and episode rather than provider array order
   ---
-  duration_ms: 0.4931
+  duration_ms: 0.29
   ...
 # Subtest: metadata reordering within an established bitmap mapping blocks updates
 ok 118 - metadata reordering within an established bitmap mapping blocks updates
   ---
-  duration_ms: 0.4516
+  duration_ms: 0.299
   ...
 # Subtest: partial playback does not mark an episode watched
 ok 119 - partial playback does not mark an episode watched
   ---
-  duration_ms: 0.4998
+  duration_ms: 0.3238
   ...
 # Subtest: initial Stremio-only watched state is reported for native outbound handling, never directly written to Trakt
 ok 120 - initial Stremio-only watched state is reported for native outbound handling, never directly written to Trakt
   ---
-  duration_ms: 1.5879
+  duration_ms: 0.5278
   ...
 # Subtest: initial Trakt-only watched state can repair an existing Stremio library item
 ok 121 - initial Trakt-only watched state can repair an existing Stremio library item
   ---
-  duration_ms: 0.718
+  duration_ms: 0.4432
   ...
 # Subtest: incomplete source never becomes empty watched history
 ok 122 - incomplete source never becomes empty watched history
   ---
-  duration_ms: 0.5675
+  duration_ms: 0.3966
   ...
 # Subtest: switching accounts invalidates a reconciliation baseline
 ok 123 - switching accounts invalidates a reconciliation baseline
   ---
-  duration_ms: 0.4151
+  duration_ms: 0.2308
   ...
 # Subtest: Trakt-side unwatch propagates to Stremio only after repeated complete observations
 ok 124 - Trakt-side unwatch propagates to Stremio only after repeated complete observations
   ---
-  duration_ms: 0.4302
+  duration_ms: 0.2681
   ...
 # Subtest: Stremio-side unwatch is never translated into a direct Trakt mutation
 ok 125 - Stremio-side unwatch is never translated into a direct Trakt mutation
   ---
-  duration_ms: 0.4151
+  duration_ms: 0.2316
   ...
 # Subtest: a removed library item is not inferred to mean unwatched
 ok 126 - a removed library item is not inferred to mean unwatched
   ---
-  duration_ms: 0.219
+  duration_ms: 0.1417
   ...
 # Subtest: watched-state patch changes only bitmap and preserves playback position
 ok 127 - watched-state patch changes only bitmap and preserves playback position
   ---
-  duration_ms: 0.7609
+  duration_ms: 0.5892
   ...
 # Subtest: incomplete newer watched scan overrides older complete canonical state
 ok 128 - incomplete newer watched scan overrides older complete canonical state
   ---
-  duration_ms: 88.7462
+  duration_ms: 99.6326
   ...
 # Subtest: one unresolved Stremio series is isolated without creating a Trakt write
 ok 129 - one unresolved Stremio series is isolated without creating a Trakt write
   ---
-  duration_ms: 0.3176
+  duration_ms: 0.2031
   ...
 # Subtest: Trakt-only watched state never creates a missing Stremio library item automatically
 ok 130 - Trakt-only watched state never creates a missing Stremio library item automatically
   ---
-  duration_ms: 0.1672
+  duration_ms: 0.1143
   ...
 # Subtest: opposing simultaneous watched changes become a manual conflict with no write
 ok 131 - opposing simultaneous watched changes become a manual conflict with no write
   ---
-  duration_ms: 0.1467
+  duration_ms: 0.0997
   ...
 # Subtest: bulk library rewrite detector catches a same-second account rewrite
 ok 132 - bulk library rewrite detector catches a same-second account rewrite
   ---
-  duration_ms: 0.4805
+  duration_ms: 0.339
   ...
 # Subtest: scattered ordinary library updates are not classified as a bulk rewrite
 ok 133 - scattered ordinary library updates are not classified as a bulk rewrite
   ---
-  duration_ms: 0.153
+  duration_ms: 0.1155
   ...
 # Subtest: positive inbound Stremio repairs are ordered before removals
 ok 134 - positive inbound Stremio repairs are ordered before removals
   ---
-  duration_ms: 0.1676
+  duration_ms: 0.115
   ...
 # Subtest: a reconciliation conflict does not advance the baseline or canonical state
 ok 135 - a reconciliation conflict does not advance the baseline or canonical state
   ---
-  duration_ms: 1.1054
+  duration_ms: 0.774
   ...
 # Subtest: manual recovery may exceed the automatic episode limit only for one reviewed Stremio item
 ok 136 - manual recovery may exceed the automatic episode limit only for one reviewed Stremio item
   ---
-  duration_ms: 0.4948
+  duration_ms: 0.4259
   ...
 # Subtest: a pre-write Stremio failure does not create a false sync hold
 ok 137 - a pre-write Stremio failure does not create a false sync hold
   ---
-  duration_ms: 1.1765
+  duration_ms: 1.0294
   ...
 # Subtest: a later failure after a verified Stremio write creates a partial-sync hold
 ok 138 - a later failure after a verified Stremio write creates a partial-sync hold
   ---
-  duration_ms: 0.5052
+  duration_ms: 0.4297
   ...
 # Subtest: native apply rejects any forged direct Trakt mutation before reading sources
 ok 139 - native apply rejects any forged direct Trakt mutation before reading sources
   ---
-  duration_ms: 0.2105
+  duration_ms: 0.1446
   ...
 # Subtest: recently modified Stremio items are deferred without blocking independent Stremio repairs
 ok 140 - recently modified Stremio items are deferred without blocking independent Stremio repairs
   ---
-  duration_ms: 0.2106
+  duration_ms: 0.1608
   ...
 # Subtest: native outbound differences progress from grace to pending to stale without writing Trakt
 ok 141 - native outbound differences progress from grace to pending to stale without writing Trakt
   ---
-  duration_ms: 0.1746
+  duration_ms: 0.1263
   ...
 # Subtest: outbound observation disappears automatically after native Stremio scrobbling catches up
 ok 142 - outbound observation disappears automatically after native Stremio scrobbling catches up
   ---
-  duration_ms: 0.1848
+  duration_ms: 0.1275
   ...
 # Subtest: multiple Stremio clients changing account state during a scan fail closed
 ok 143 - multiple Stremio clients changing account state during a scan fail closed
   ---
-  duration_ms: 47.1666
+  duration_ms: 39.3799
   ...
 # Subtest: external-player/manual Stremio mark is treated as native outbound pending, never synthesized as a Trakt write
 ok 144 - external-player/manual Stremio mark is treated as native outbound pending, never synthesized as a Trakt write
   ---
-  duration_ms: 0.1933
+  duration_ms: 0.1956
   ...
 # Subtest: persistent Trakt-only watched state remains an inbound repair candidate across bounded batches
 ok 145 - persistent Trakt-only watched state remains an inbound repair candidate across bounded batches
   ---
-  duration_ms: 0.1707
+  duration_ms: 0.1799
   ...
 # Subtest: an intentional Stremio-side unwatch remains native-outbound pending and is never repaired back from Trakt
 ok 146 - an intentional Stremio-side unwatch remains native-outbound pending and is never repaired back from Trakt
   ---
-  duration_ms: 0.1815
+  duration_ms: 0.1884
   ...
 # Subtest: non-episode video rows keep their bitfield position without invalidating valid episode state
 ok 147 - non-episode video rows keep their bitfield position without invalidating valid episode state
   ---
-  duration_ms: 0.5615
+  duration_ms: 0.4401
   ...
 # Subtest: a series with no valid episode identity remains unresolved rather than becoming unwatched
 ok 148 - a series with no valid episode identity remains unresolved rather than becoming unwatched
   ---
-  duration_ms: 0.36
+  duration_ms: 0.2786
   ...
 # Subtest: duplicate episode identity with agreeing bits is readable but marked non-writable
 ok 149 - duplicate episode identity with agreeing bits is readable but marked non-writable
   ---
-  duration_ms: 0.5622
+  duration_ms: 0.3386
   ...
 # Subtest: duplicate watched anchor is rejected because position cannot be identified uniquely
 ok 150 - duplicate watched anchor is rejected because position cannot be identified uniquely
   ---
-  duration_ms: 0.3063
+  duration_ms: 0.2124
   ...
 # Subtest: year-numbered seasons are valid watched keys
 ok 151 - year-numbered seasons are valid watched keys
   ---
-  duration_ms: 0.1086
+  duration_ms: 0.0723
   ...
 # Subtest: episode numbering mismatch is classified separately from a missing episode in a known season
 ok 152 - episode numbering mismatch is classified separately from a missing episode in a known season
   ---
-  duration_ms: 0.6423
+  duration_ms: 0.4409
   ...
 # Subtest: legacy identity-scheme baseline is backed up and rebaselined instead of misclassified as an account change
 ok 153 - legacy identity-scheme baseline is backed up and rebaselined instead of misclassified as an account change
   ---
-  duration_ms: 0.3799
+  duration_ms: 0.3049
   ...
 # Subtest: watched candidate preserves non-episode rows while modifying a valid episode
 ok 154 - watched candidate preserves non-episode rows while modifying a valid episode
   ---
-  duration_ms: 0.6613
+  duration_ms: 0.4265
   ...
 # Subtest: watched candidate refuses an ambiguous duplicate episode identity
 ok 155 - watched candidate refuses an ambiguous duplicate episode identity
   ---
-  duration_ms: 0.4721
+  duration_ms: 0.8145
   ...
 # Subtest: watched candidate refuses to create a duplicate serialized anchor
 ok 156 - watched candidate refuses to create a duplicate serialized anchor
   ---
-  duration_ms: 0.3734
+  duration_ms: 0.2423
   ...
 # Subtest: source identity change is backed up and rebaselined without a write on that cycle
 ok 157 - source identity change is backed up and rebaselined without a write on that cycle
   ---
-  duration_ms: 0.6465
+  duration_ms: 0.3796
   ...
 # Subtest: validated mapping registry preserves non-episode bit positions and survives current catalog anchor loss
 ok 158 - validated mapping registry preserves non-episode bit positions and survives current catalog anchor loss
   ---
-  duration_ms: 110.3159
+  duration_ms: 82.4961
   ...
 # Subtest: successful Cinemeta decode persists an exact validated mapping registry entry
 ok 159 - successful Cinemeta decode persists an exact validated mapping registry entry
   ---
-  duration_ms: 69.8429
+  duration_ms: 90.3411
   ...
 # Subtest: duplicate episode identity with disagreeing bits remains unresolved and non-writable
 ok 160 - duplicate episode identity with disagreeing bits remains unresolved and non-writable
   ---
-  duration_ms: 0.4732
+  duration_ms: 0.3664
   ...
 1..160
 # tests 175
@@ -887,4 +887,4 @@ ok 160 - duplicate episode identity with disagreeing bits remains unresolved and
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 1984.8898
+# duration_ms 1957.5123

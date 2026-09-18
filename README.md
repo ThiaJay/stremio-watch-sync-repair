@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/release-banner.svg" alt="Watch Sync &amp; Repair for Stremio — Community Release 1.0.0" width="100%"></p>
+<p align="center"><img src="assets/release-banner.svg" alt="Watch Sync &amp; Repair for Stremio — Community Release 1.0.1" width="100%"></p>
 
 # Watch Sync & Repair for Stremio
 
@@ -40,7 +40,7 @@ See `docs/RESILIENCE.md` and `docs/THREAT-MODEL.md` for the detailed failure mat
 
 ## Download
 
-The current hardened reference build is **1.0.0**. Download the source ZIP and matching SHA-256 file from [GitHub Releases](https://github.com/ThiaJay/stremio-watch-sync-repair/releases). Verify the checksum before extracting.
+The current hardened reference build is **1.0.1**. Download the source ZIP and matching SHA-256 file from [GitHub Releases](https://github.com/ThiaJay/stremio-watch-sync-repair/releases). Verify the checksum before extracting.
 
 ## Quick start
 

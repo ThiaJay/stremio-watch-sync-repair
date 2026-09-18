@@ -1,6 +1,6 @@
 {
   "product": "Watch Sync & Repair for Stremio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "at": "2026-09-18T09:48:33.576484+00:00",
   "releaseState": "UPSTREAM_DISCUSSION_READY_REFERENCE",
   "configurationSchema": 3,
@@ -93,7 +93,7 @@
     "conflictsRemaining": false,
     "writeHoldRemaining": false
   },
-  "publicEvidence": "evidence/public-release-review-1.0.0.json",
+  "publicEvidence": "evidence/public-release-review-1.0.1.json",
   "testLog": "evidence/finalization-tests.txt",
   "privateOperationalEvidenceIncluded": false
 }
